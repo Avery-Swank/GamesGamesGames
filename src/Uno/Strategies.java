@@ -45,7 +45,7 @@ public class Strategies {
 	 */
 	public static int random(Player player, Stack stack, Discard discard) {
 		
-		// draw cards until the player can player
+		// draw cards until the player can play
 		while(!canPlay(player, discard)) {
 			player.draw(stack.getTopCard());
 			System.out.println(player.getName() + " draws one card...");
@@ -61,5 +61,59 @@ public class Strategies {
 		}
 		
 		return -1;
+	}
+	
+	/**
+	 * @description Plays like a strategic player
+	 * Some attributes of a strategic player may include:
+	 *  - Hitting players that have UNO with a 'draw two' or 'wild draw four'
+	 *  - Skipping players that have UNO
+	 *  - Reversing on players that have UNO
+	 *  - Playing your wild cards last because you are more likely draw when you have less cards
+	 * @return
+	 */
+	public static int strategic(Player player, Player nextPlayer, Stack stack, Discard discard) {
+		
+		// draw cards until the player can play
+		while(!canPlay(player, discard)) {
+			player.draw(stack.getTopCard());
+			System.out.println(player.getName() + " draws one card...");
+		}
+		
+		ArrayList<Card> playableCards = getPlayableCards(player, discard);
+		
+		// if the next player has uno, then use any card the current play has 
+		// to avoid another player from winning
+		if(nextPlayer.isUno()) {
+			for(int i = 0; i < playableCards.size(); i++) {
+				Card currCard = playableCards.get(i);
+				
+				// if is a special card
+				if(currCard.getType().equals("draw two") || currCard.getType().equals("skip") || currCard.getType().equals("wild") || currCard.getType().equals("wild draw four")) {
+					for(int j = 0; i < player.getCards().size(); j++) {
+						if(player.getCards().get(j).equals(currCard)) {
+							return j;
+						}
+					}
+				}
+			}
+		}
+		
+		// Otherwise, play any card that is not a wild
+		for(int i = 0; i < playableCards.size(); i++) {
+			Card currCard = playableCards.get(i);
+			
+			// if is not a wild card
+			if(!currCard.getType().equals("wild") && !currCard.getType().equals("wild draw four")) {
+				for(int j = 0; i < player.getCards().size(); j++) {
+					if(player.getCards().get(j).equals(currCard)) {
+						return j;
+					}
+				}
+			}
+		}
+		
+		// Otherwise, play a random card
+		return random(player, stack, discard);
 	}
 }

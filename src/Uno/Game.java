@@ -44,12 +44,30 @@ public class Game {
 		
 		// Play starting with the first player
 		int currPlayerIndex = 0;
+		int nextPlayerIndex;
 		while(true) {
 			
+			// Get the current player
 			Player currPlayer = players[currPlayerIndex];
+			Player curNextPlayer;
 			
-			// Play a card
-			int cardToPlayIndex = currPlayer.play(stack, discard);
+			if(direction) {
+				nextPlayerIndex = currPlayerIndex + 1;
+			} else {
+				nextPlayerIndex = currPlayerIndex - 1;
+			}
+			
+			if(nextPlayerIndex < 0) {
+				nextPlayerIndex = players.length-1;
+			} else if(nextPlayerIndex > players.length-1) {
+				nextPlayerIndex = 0;
+			}
+			
+			// Get the current player's next player
+			curNextPlayer = players[nextPlayerIndex];
+			
+			// Play a card - may depend on the number of cards the next player has
+			int cardToPlayIndex = currPlayer.play(curNextPlayer, stack, discard);
 			discard.addCard(currPlayer.getCards().remove(cardToPlayIndex));
 			
 			System.out.println(currPlayer.getName() + " plays " + discard.getTopCard().toString() + "...");
@@ -68,7 +86,7 @@ public class Game {
 			// Change the direction of the game if a 'reverse' card is played
 			if(discard.getTopCard().getType().contains("reverse")) {
 				direction = !direction;
-				System.out.println("Switching directions...");
+				System.out.println("Uno: Switching directions...");
 			}
 			
 			// Change the player index based on the direction of the game
@@ -88,7 +106,7 @@ public class Game {
 			// if any skip card is played, then update the direction of the game AGAIN
 			if(discard.getTopCard().getType().contains("skip")) {
 				
-				System.out.println("Skipping " + players[currPlayerIndex].getName() + "...");
+				System.out.println("Uno: Skipping " + players[currPlayerIndex].getName() + "...");
 				
 				// Change the player index based on the direction of the game
 				if(direction) {
@@ -120,7 +138,7 @@ public class Game {
 				nextPlayer.draw(stack.getTopCard());
 				nextPlayer.draw(stack.getTopCard());
 				nextPlayer.draw(stack.getTopCard());
-				System.out.println(nextPlayer.getName() + " draws four cards cards...");
+				System.out.println(nextPlayer.getName() + " draws four cards...");
 			}
 			
 			// if the stack is getting low, then put the rest of the discard cards underneath the top card back onto
@@ -129,7 +147,7 @@ public class Game {
 				for(int i = 0; i < discard.getCards().size()-2; i++) {
 					stack.addCard(discard.getCards().remove(0));
 				}
-				System.out.println("Refilling Stack from Discards...");
+				System.out.println("Uno: Refilling Stack from Discards...");
 			}
 		}
 	}

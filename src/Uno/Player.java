@@ -15,11 +15,13 @@ public class Player {
 		cards = new ArrayList<Card>();
 	}
 	
-	public int play(Stack stack, Discard discard) {
+	public int play(Player nextPlayer, Stack stack, Discard discard) {
 		
 		switch(type) {
 			case "random":
 				return Strategies.random(this, stack, discard);
+			case "strategic":
+				return Strategies.strategic(this, nextPlayer, stack, discard);
 			default:
 				throw new Error("Invalid Player Type: " + type);
 		}
