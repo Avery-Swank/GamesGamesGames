@@ -124,6 +124,30 @@ public class Strategies {
 	}
 	
 	/**
+	 * @description If the player can split, then split. Otherwise, play basic strategy
+	 */
+	public static String getAlwaysSplit(Hand playerHand, Card dealerCard) {
+		
+		if(playerHand.canSplit()) {
+			return "p";
+		}
+		
+		return getBasicStrategy(playerHand, dealerCard);
+	}
+	
+	/**
+	 * @description If the player can bust, then stay. Otherwise, play basic strategy
+	 */
+	public static String getNeverBreak(Hand playerHand, Card dealerCard) {
+		
+		if(playerHand.getSoftValue() > 11 && playerHand.getHardValue() > 11) {
+			return "s";
+		}
+		
+		return getBasicStrategy(playerHand, dealerCard);
+	}
+	
+	/**
 	 * @description Return a human input move
 	 */
 	public static String getHumanStrategy(Hand playerHand) {
