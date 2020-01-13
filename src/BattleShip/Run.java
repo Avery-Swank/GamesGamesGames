@@ -4,7 +4,7 @@ public class Run {
 
 	public static void main(String[] args) {
 		
-		Player p1 = new Player("Avery", "random");
+		Player p1 = new Player("Avery", "breadth");
 		Player p2 = new Player("Luke", "random");
 		
 		// Customize the BattleShip pieces to play here

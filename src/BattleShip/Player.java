@@ -24,6 +24,9 @@ public class Player {
 			case "random":
 				move = Strategies.random(targetGrid);
 				break;
+			case "breadth":
+				move = Strategies.breadth(targetGrid);
+				break;
 			default:
 				throw new Error("Invalid Player Type: " + type);
 		}

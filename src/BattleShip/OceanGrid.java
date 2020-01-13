@@ -132,13 +132,17 @@ public class OceanGrid {
 		}
 	}
 	
-	public int getNumberOfSinks() {
-		int sinks = 0;
-		for(Ship ship : ships) {
-			if(ship.isSunk())
-				sinks++;
+	public ArrayList<Ship> getSunkenShips(){
+		ArrayList<Ship> sunkenShips = new ArrayList<Ship>();
+		for(int i = 0; i < ships.size(); i++) {
+			if(ships.get(i).isSunk())
+				sunkenShips.add(ships.get(i));
 		}
-		return sinks;
+		return sunkenShips;
+	}
+	
+	public int getNumberOfSinks() {
+		return getSunkenShips().size();
 	}
 	
 	public boolean getSunkAllShips() {

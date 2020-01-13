@@ -1,5 +1,7 @@
 package BattleShip;
 
+import java.util.ArrayList;
+
 public class Game {
 
 	private Player p1;
@@ -33,6 +35,7 @@ public class Game {
 			int row = move[0];
 			int column = move[1];
 			String col = BattleShipProps.getLetter(column);
+			ArrayList<Ship> prevSunkenShips = currOpponent.getOceanGrid().getSunkenShips();
 			
 			System.out.println(currPlayer.getName() + " plays " + row + col + "...");
 			
@@ -49,6 +52,14 @@ public class Game {
 				currPlayer.getTargetGrid().setSpot(row, col, BattleShipProps.miss);
 				currOpponent.getOceanGrid().setSpot(row, col, BattleShipProps.miss);
 				System.out.println("" + row + col + " is a miss...");
+			}
+			
+			ArrayList<Ship> postSunkenShips = currOpponent.getOceanGrid().getSunkenShips();
+			
+			// Check if the player sunk a battleship
+			if(prevSunkenShips.size() < postSunkenShips.size()) {
+				Ship newSunkenShip = getNewSunkenShip(prevSunkenShips, postSunkenShips);
+				System.out.println(currPlayer.getName() + " has sunken the '" + newSunkenShip.getName() + "'...");
 			}
 			
 			boolean sunkAllShips = currOpponent.getOceanGrid().getSunkAllShips();
@@ -69,6 +80,7 @@ public class Game {
 		
 		System.out.println(currPlayer);
 		System.out.println(currOpponent);
+		
 	}
 	
 	/**
@@ -102,5 +114,20 @@ public class Game {
 			oceanGrid.addShip(randRow, randColumn, randDirection, ship);
 			System.out.println(player.getName() + " added a '" + ship.getName() + "' to their ocean grid...");
 		}
+	}
+	
+	private Ship getNewSunkenShip(ArrayList<Ship> prev, ArrayList<Ship> post) {
+		
+		for(int i = 0; i < prev.size(); i++) {
+			Ship prevShip = prev.get(i);
+			for(int j = 0; j < post.size(); j++) {
+				Ship postShip = post.get(j);
+				if(prevShip.getName().equals(postShip.getName())) {
+					post.remove(j);
+				}
+			}
+		}
+		
+		return post.get(0);
 	}
 }
