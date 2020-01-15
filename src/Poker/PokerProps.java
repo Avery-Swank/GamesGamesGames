@@ -300,7 +300,7 @@ public class PokerProps {
 			if(getPairs(countTypes).get(0).equals("ace"))
 				higherPair = "ace";
 			else
-				higherPair = getPairs(countTypes).get(1);
+				higherPair = getPairs(countTypes).get(1);	// guaranteed to be the last pair because it checks for pairs in order
 			
 			return new HandRank(2,  higherPair, "two pair of " + getPairs(countTypes).get(0)  + "s and " + getPairs(countTypes).get(1) + "s");
 		} else if(isCardsOnePair) {
