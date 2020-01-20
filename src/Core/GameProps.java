@@ -15,5 +15,12 @@ public class GameProps {
 	public static int rollDie() {
 		return (int)(Math.random() * 6) + 1;
 	}
+	
+	/**
+	 * @description Return true if two dice are doubles (ie the same)
+	 */
+	public static boolean isDoubles(int x, int y) {
+		return x == y;
+	}
 
 }
