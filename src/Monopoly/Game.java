@@ -111,7 +111,7 @@ public class Game {
 		// If the player goes beyond the size of the board, then the player passes GO and starts over on the board
 		int currPosition = currPlayer.getBoardPosition();
 		if(currPosition + firstDie + secondDie >= board.getSize()) {
-			currPlayer.pay(200);
+			currPlayer.sell(200);
 			int offset = currPosition + firstDie + secondDie - board.getSize();
 			currPlayer.setBoardPosition(offset);
 			System.out.println(currPlayer.getName() + " has passed GO. Will collect $200...");
@@ -153,9 +153,10 @@ public class Game {
 			// If the railroad is owned by another player, then pay that railroad's rent
 			if(isRailroadForSale(rr) != null && isRailroadForSale(rr) != currPlayer) {
 				Player rrOwner = isRailroadForSale(rr);
-				currPlayer.pay(rr.getRent(1));
-				rrOwner.sell(rr.getRent(1));
-				System.out.println(currPlayer.getName() + " has paid " + rrOwner.getName() + " $" + rr.getRent(1) + " rent on Railroad: " + rr.getName() + "...");
+				int rrRent = rrOwner.getNumRailroadsOwned();
+				currPlayer.pay(rr.getRent(rrRent));
+				rrOwner.sell(rr.getRent(rrRent));
+				System.out.println(currPlayer.getName() + " has paid " + rrOwner.getName() + " $" + rr.getRent(rrRent) + " rent on Railroad: " + rr.getName() + "...");
 			}
 			
 		} else {
@@ -191,6 +192,24 @@ public class Game {
 					currPlayer.pay(75);
 					System.out.println(currPlayer.getName() + " pays $75 in Luxury Tax...");
 					break;
+			}
+		}
+		
+		// If the player can afford to buy a house for one of its properties, buy a house for a random property
+		if(currPlayer.getProperties().size() > 0) {
+			Property randProp = currPlayer.getProperties().get((int)(Math.random() * currPlayer.getProperties().size()));
+			if(currPlayer.getMoney() > randProp.getMorgageHousesCost() && randProp.canBuyHouse()) {
+				randProp.buyHouse();
+				System.out.println(currPlayer.getName() + " has purchased a house for Property: " + randProp.getName() + "...");
+			}
+		}
+		
+		// If the player can afford to buy a hotel for one of its properties, buy a house for a random property
+		if(currPlayer.getProperties().size() > 0) {
+			Property randProp = currPlayer.getProperties().get((int)(Math.random() * currPlayer.getProperties().size()));
+			if(currPlayer.getMoney() > randProp.getMorgageHotelsCost() && randProp.canBuyHotel()) {
+				randProp.buyHotel();
+				System.out.println(currPlayer.getName() + " has purchased a hotel for Property: " + randProp.getName() + "...");
 			}
 		}
 			

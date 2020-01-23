@@ -71,6 +71,10 @@ public class Player {
 		sell(rr.getMorgageValue());
 	}
 	
+	public int getNumRailroadsOwned() {
+		return railroads.size();
+	}
+	
 	public boolean hasPropertyMonopoly(String color) {
 		int numColors = MonopolyProps.getNumColors(color);
 		int currNumColors = 0;
@@ -111,6 +115,14 @@ public class Player {
 	
 	public int getMoney() {
 		return money;
+	}
+	
+	public ArrayList<Property> getProperties(){
+		return properties;
+	}
+	
+	public ArrayList<Railroad> getRailroads(){
+		return railroads;
 	}
 	
 	public int getBoardPosition() {

@@ -46,6 +46,10 @@ public class Property {
 		numHotels++;
 	}
 	
+	public boolean canBuyHouse() {
+		return numHouses < 4;
+	}
+	
 	public boolean canBuyHotel() {
 		return numHouses == 4;
 	}
