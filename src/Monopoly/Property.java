@@ -111,7 +111,7 @@ public class Property {
 		
 		s = s.concat("Morgage Value $" + morgageValue + "\n");
 		s = s.concat("Houses Cost $" + housesCost + "\n");
-		s = s.concat("Hotels Cost $" + hotelsCost + "\n");
+		s = s.concat("Hotels Cost $" + hotelsCost + "\n\n");
 		
 		return s;
 	}

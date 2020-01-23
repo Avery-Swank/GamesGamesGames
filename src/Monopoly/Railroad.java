@@ -46,14 +46,14 @@ public class Railroad {
 	}
 	
 	public String toString() {
-		String s = "Property: " + name + "\n";
+		String s = "Railroad: " + name + "\n";
 		
 		s = s.concat("Rent                    $" + rent + ".\n");
 		s = s.concat("If 2 R.R.'s are owned    " + rentTwoRR + ".\n");
 		s = s.concat("If 3   '   '   '         " + rentThreeRR + ".\n");
 		s = s.concat("If 4   '   '   '         " + rentFourRR + ".\n");
 		
-		s = s.concat("Morgage Value            " + morgageValue + ".\n");
+		s = s.concat("Morgage Value            " + morgageValue + ".\n\n");
 		
 		return s;
 	}

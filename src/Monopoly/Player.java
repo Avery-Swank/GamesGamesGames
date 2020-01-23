@@ -18,6 +18,7 @@ public class Player {
 	public Player(String _name, String _piece, int _money) {
 		name = _name;
 		piece = _piece;
+		money = _money;
 		
 		properties = new ArrayList<Property>();
 		railroads = new ArrayList<Railroad>();
@@ -90,6 +91,14 @@ public class Player {
 	
 	public void setInJail(boolean inJail) {
 		isInJail = inJail;
+	}
+	
+	/**
+	 * @description Go Bankrupt. Remove all of the players properties and railroads
+	 */
+	public void goBankrupt() {
+		properties.clear();
+		railroads.clear();
 	}
 	
 	public String getName() {
